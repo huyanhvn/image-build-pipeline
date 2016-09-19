@@ -50,10 +50,19 @@ Packer build job
 ----------------
 A sample Jenkins job that uses Github Pull Request Builder plugin to run automated Packer builds is created by default from jenkins-wrapper cookbook. Customize the job to your values (or overwrites it using cookbook attributes).
 
-Additional setup is needed to make sure Packer runs correctly. See them [https://github.com/huyanhvn/image-build-pipeline/packer]
+Additional setup is needed to make sure Packer runs correctly. See them [https://github.com/huyanhvn/image-build-pipeline/tree/master/packer]
 
 Expected end results
 --------------------
 If the pipeline worked correctly, the new AMI would be built using Chef cookbook ```ubuntu-build```, tested using serverspec, copied to other AWS regions, and shared with other AWS accounts.
+
+Resources
+---------
+Chef [https://learn.chef.io/]
+Jenkins cookbook [https://github.com/chef-cookbooks/jenkins]
+Github Pull Request Builder plugin [https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin]
+Hashicorp Packer [https://www.packer.io/docs/]
+serverspec [http://serverspec.org/]
+Hashicorp Terraform [https://www.terraform.io/docs/]
 
 
