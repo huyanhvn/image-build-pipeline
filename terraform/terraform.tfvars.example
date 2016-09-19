@@ -1,0 +1,22 @@
+# AWS creds
+# Assumes being sourced from env vars TF_VAR_<name>
+# If not set the values below
+# aws_secret_key = 
+# aws_access_key = 
+aws_region = "us-east-1"
+
+# Common
+availability_zones = [ "us-east-1a", "us-east-1c" ]
+tags = {
+  CostCenter = "demo"
+  Environment = "dev"
+  CreatedBy = "https://github.com/huyanhvn"
+  AppName = "demo"
+}
+prevent_destroy = "true"
+
+# Fill out your values below
+secrets_s3_bucket = "..."
+ssh_key_name = "..."
+ssh_ingress = "0.0.0.0/0"
+
