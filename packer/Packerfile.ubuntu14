@@ -7,7 +7,7 @@
     "ami_description": "Sample Ubuntu 14.04 Packer build",
     "ami_volume_size": "8",
     "ami_volume_type": "gp2",
-    "security_group_id": "sg-c8fb8fb2",
+    "security_group_id": "sg-843443fe",
     "chef_runlist": "recipe[ubuntu-build::default]",
     "secrets_s3_bucket": "huy-chef",
     "ssh_home_dir": "/home/ubuntu/",
@@ -36,8 +36,7 @@
       "source_ami": "{{user `source_ami_id`}}",
       "packer": "true"
     },
-    "ami_description": "{{user `ami_description`}}",
-    "ami_regions": [ "us-west-2" ]
+    "ami_description": "{{user `ami_description`}}"
   }],
   "provisioners": [
     {
