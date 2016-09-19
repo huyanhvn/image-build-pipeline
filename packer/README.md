@@ -57,7 +57,7 @@ $ sudo unzip packer_0.10.1_linux_amd64.zip -d /usr/bin
 ```
 
 ## Clone pipeline artifacts
-Copy contents of [https://github.com/huyanhvn/image-build-pipeline/packer] to working directory.
+Copy contents of [https://github.com/huyanhvn/image-build-pipeline/tree/master/packer] to working directory.
 
 ## Pass input params for the build
 Input params need to be set in individual `Packerfile`. Set them to respective AWS environments you're building in.
