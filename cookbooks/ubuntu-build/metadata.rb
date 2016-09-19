@@ -1,0 +1,7 @@
+name 'ubuntu-build'
+maintainer 'Huy Nguyen'
+maintainer_email 'ace321@gmail.com'
+license 'apachev2'
+description 'Installs/Configures ubuntu-build'
+long_description 'Installs/Configures ubuntu-build'
+version '0.1.0'

@@ -7,10 +7,10 @@
     "ami_description": "Sample Ubuntu 14.04 Packer build",
     "ami_volume_size": "8",
     "ami_volume_type": "gp2",
-    "security_group_id": "sg-ef5a2e95",
+    "security_group_id": "sg-c8fb8fb2",
     "chef_runlist": "recipe[ubuntu-build::default]",
     "secrets_s3_bucket": "huy-chef",
-    "ssh_home_dir": "/home/ubuntu",
+    "ssh_home_dir": "/home/ubuntu/",
     "ssh_username": "ubuntu"
   },
   "builders": [{
@@ -20,7 +20,7 @@
     "region": "{{user `aws_region`}}",
     "source_ami": "{{user `source_ami_id`}}",
     "instance_type": "{{user `ami_instance_type`}}",
-    "ssh_username": "{{user `ssh_username}}",
+    "ssh_username": "{{user `ssh_username`}}",
     "ami_name": "{{user `ami_name` | clean_ami_name }}_{{isotime \"2006-01-02\"}}_{{isotime \"150405MST\"}}",
     "ami_block_device_mappings": [
       {
@@ -42,42 +42,32 @@
   "provisioners": [
     {
       "type": "shell-local",
-      "command": "aws s3 cp --sse aws:kms s3://{{user `secrets_s3_bucket`}}/devops-melbourne-validator.pem {{user `ssh_home_dir`}}"
+      "command": "aws s3 cp --sse aws:kms s3://{{user `secrets_s3_bucket`}}/devops-melbourne-validator.pem ."
     },
     {
       "type": "shell",
-      "script": "{{user `ssh_home_dir`}}/shell-provisioner.sh",
+      "script": "./shell-provisioner.sh",
       "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo bash -x {{ .Path }}"
     },
     {
       "type": "file",
-      "source": "spec",
-      "destination": "{{user `ssh_home_dir`}}"
-    },
-    {
-      "type": "file",
-      "source": "Rakefile",
-      "destination": "{{user `ssh_home_dir`}}"
-    },
-    {
-      "type": "file",
-      "source": ".rspec",
+      "source": "serverspec",
       "destination": "{{user `ssh_home_dir`}}"
     },
     {
       "type": "chef-client",
       "server_url": "https://api.chef.io/organizations/devops-melbourne",
-      "validation_key_path": "{{user `ssh_home_dir`}}/devops-melbourne-validator.pem",
+      "validation_key_path": "./devops-melbourne-validator.pem",
       "validation_client_name": "devops-melbourne-validator",
       "run_list": "{{user `chef_runlist`}}"
     },
     {
       "type": "shell",
-      "inline": "cd {{user `ssh_home_dir`}} && rake spec"
+      "inline": "cd {{user `ssh_home_dir`}}/serverspec && rake spec"
     },
     {
       "type": "shell-local",
-      "command": "rm -f {{user `ssh_home_dir`}}/devops-melbourne-validator.pem"
+      "command": "rm -f ./devops-melbourne-validator.pem"
     }
   ]
 }

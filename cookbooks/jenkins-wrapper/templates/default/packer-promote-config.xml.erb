@@ -1,0 +1,106 @@
+<project>
+  <actions/>
+  <description>Promote images built by packer-build job to other AWS accounts (triggered via Github pull request)</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.21.1">
+      <projectUrl><%= @github_repo %></projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.0.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name>origin</name>
+        <refspec>+refs/pull/*:refs/remotes/origin/pr/*</refspec>
+        <url><%= @github_repo %></url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>${sha1}</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.33.1">
+      <spec>* * * * *</spec>
+      <latestVersion>3</latestVersion>
+      <configVersion>3</configVersion>
+      <adminlist><%= @github_admins %></adminlist>
+      <allowMembersOfWhitelistedOrgsAsAdmin>false</allowMembersOfWhitelistedOrgsAsAdmin>
+      <orgslist></orgslist>
+      <cron>* * * * *</cron>
+      <buildDescTemplate></buildDescTemplate>
+      <onlyTriggerPhrase>true</onlyTriggerPhrase>
+      <useGitHubHooks>false</useGitHubHooks>
+      <permitAll>false</permitAll>
+      <whitelist></whitelist>
+      <autoCloseFailedPullRequests>false</autoCloseFailedPullRequests>
+      <displayBuildErrorsOnDownstreamBuilds>false</displayBuildErrorsOnDownstreamBuilds>
+      <whiteListTargetBranches>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch></branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+      </whiteListTargetBranches>
+      <blackListTargetBranches>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch></branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+      </blackListTargetBranches>
+      <gitHubAuthId><%= @github_auth_id %></gitHubAuthId>
+      <triggerPhrase>promote image</triggerPhrase>
+      <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
+      <extensions>
+        <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
+          <commitStatusContext></commitStatusContext>
+          <triggeredStatus></triggeredStatus>
+          <startedStatus></startedStatus>
+          <statusUrl></statusUrl>
+          <addTestResults>true</addTestResults>
+          <completedStatus>
+            <org.jenkinsci.plugins.ghprb.extensions.comments.GhprbBuildResultMessage>
+              <message>Packer image promoted to other AWS accounts.</message>
+              <result>SUCCESS</result>
+            </org.jenkinsci.plugins.ghprb.extensions.comments.GhprbBuildResultMessage>
+            <org.jenkinsci.plugins.ghprb.extensions.comments.GhprbBuildResultMessage>
+              <message>Packer image promotion failed!</message>
+              <result>FAILURE</result>
+            </org.jenkinsci.plugins.ghprb.extensions.comments.GhprbBuildResultMessage>
+          </completedStatus>
+        </org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
+      </extensions>
+    </org.jenkinsci.plugins.ghprb.GhprbTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command># Example
+# cp /var/lib/jenkins/jobs/packer-build/workspace/packer_output.log .
+# bash share-ami.sh ./packer_output.log</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <org.jenkinsci.plugins.ghprb.GhprbPullRequestMerge plugin="ghprb@1.33.1">
+      <onlyAdminsMerge>true</onlyAdminsMerge>
+      <disallowOwnCode>true</disallowOwnCode>
+      <mergeComment>Packer image promoted to other AWS accounts.</mergeComment>
+      <failOnNonMerge>true</failOnNonMerge>
+      <deleteOnMerge>false</deleteOnMerge>
+      <allowMergeWithoutTriggerPhrase>false</allowMergeWithoutTriggerPhrase>
+    </org.jenkinsci.plugins.ghprb.GhprbPullRequestMerge>
+  </publishers>
+  <buildWrappers/>
+</project>
