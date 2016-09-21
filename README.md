@@ -5,6 +5,7 @@ A simple image CI/CD pipeline using combination of Github + Jenkins + Hashicorp 
 Set up Chef jenkins-wrapper cookbook
 ------------------------------------
 Clone folder `cookbooks` of this repo and set up appropriate vars in `cookbooks/jenkins-wrapper/attributes/default.rb` file. Specific variable explanations are below:
+
 | Param              | Explanation                                     |
 | -------------------|:-----------------------------------------------:|
 | ['jenkins-wrapper']['github']['user'] | Your Github role userid whose token was put into github_token in S3 bucket |

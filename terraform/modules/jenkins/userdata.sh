@@ -8,11 +8,11 @@ pip install awscli
 
 # Github private token
 mkdir -p /var/lib/jenkins
-/usr/local/bin/aws s3 cp --sse aws:kms s3://huy-chef/github_token /var/lib/jenkins/github_token
+/usr/local/bin/aws s3 cp --sse aws:kms s3://[YOUR SECRET BUCKET]/github_token /var/lib/jenkins/github_token
 
 # Prep chef run
-/usr/local/bin/aws s3 cp --sse aws:kms s3://huy-chef/devops-melbourne-validator.pem /etc/chef/
-/usr/local/bin/aws s3 cp s3://huy-chef/client.rb /etc/chef/
+/usr/local/bin/aws s3 cp --sse aws:kms s3://[YOUR SECRET BUCKET]/[YOUR CHEF VALIDATION PEM] /etc/chef/
+/usr/local/bin/aws s3 cp s3://[YOUR SECRET BUCKET]/client.rb /etc/chef/
 curl -L https://omnitruck.chef.io/install.sh | sudo bash
 
 # Execute chef with runlist to set up jenkins
