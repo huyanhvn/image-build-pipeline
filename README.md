@@ -88,11 +88,11 @@ If the pipeline worked correctly, the new AMI would be built using Chef cookbook
 
 Resources
 ---------
-Chef [https://learn.chef.io/]
-Jenkins cookbook [https://github.com/chef-cookbooks/jenkins]
-Github Pull Request Builder plugin [https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin]
-Hashicorp Packer [https://www.packer.io/docs/]
-serverspec [http://serverspec.org/]
-Hashicorp Terraform [https://www.terraform.io/docs/]
+Chef (https://learn.chef.io/)
+Jenkins cookbook (https://github.com/chef-cookbooks/jenkins)
+Github Pull Request Builder plugin (https://wiki.jenkins-ci.org/display/JENKINS/GitHub+pull+request+builder+plugin)
+Hashicorp Packer (https://www.packer.io/docs/)
+serverspec (http://serverspec.org/)
+Hashicorp Terraform (https://www.terraform.io/docs/)
 
 
