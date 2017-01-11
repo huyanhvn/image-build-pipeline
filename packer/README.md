@@ -18,6 +18,7 @@ The EC2 instance needs following policy attached to its instance IAM role:
                 "ec2:DescribeSubnets",
                 "ec2:CreateSecurityGroup",
                 "ec2:DeleteSecurityGroup",
+                "ec2:DescribeSecurityGroups",
                 "ec2:AuthorizeSecurityGroupIngress",
                 "ec2:CreateImage",
                 "ec2:CopyImage",
